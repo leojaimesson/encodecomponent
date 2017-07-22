@@ -2,13 +2,13 @@
 	'use strict'
 
 	if (typeof define === 'function' && define.amd) {
-    	define('encode', factory)
+    	define('uricomp', factory)
   	} 
 	else if (typeof exports === 'object') {
     	exports = module.exports = factory()
   	} 
   	else {
-    	root.encode = factory()
+    	root.uricomp = factory()
   	}
 
 })(this, function(){
@@ -27,7 +27,7 @@
 
 	/**
 	 * @description
-	 * Recebe uma string e retorna a sua versão em formato encode
+	 * Recebe uma string e retorna a sua versão em um parâmetro de URI
 	 * 
 	 * @param {String} value
 	 * @return {String} 
@@ -38,7 +38,7 @@
 
 	/**
 	 * @description
-	 * Converte um sub-objeto em seu respectivo uriComponent
+	 * Converte um sub-objeto em sua respectiva string de parâmetro de URI codificada.
 	 * 
 	 * @param {String} prefix 
 	 * @param {Object} object 
@@ -60,7 +60,7 @@
 
 	/**
 	 * @description
-	 * Converte um objeto em um uriComponet
+	 * Converte um objeto em uma string de parâmetro de URI codificada.
 	 * 
 	 * @param {Object} object 
 	 * @return {String}
@@ -79,9 +79,9 @@
 		return isObject(object) ? _buildCode(object) : object;
 	}
 
-	function encode(obj) {
+	function uricomp(obj) {
 		return _objectToQueryString(obj);
 	}
 
-	return encode; 
+	return uricomp; 
 })

@@ -1,4 +1,4 @@
-var encode = require('../src/encode.js');
+var uricomp = require('../src/uricomp');
 
 var object = {
     name : 'leo jaimesson',
@@ -9,4 +9,4 @@ var object = {
     }
 };
 
-console.log(encode(object));
+console.log(uricomp(object));
