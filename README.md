@@ -2,6 +2,12 @@
 
 Uma simples lib para converter um objeto javascript em uma string de parâmetro URI codificada. 
 
+## Instalação
+
+```console
+npm install uricomponent
+```
+
 ## Importar
 
 **AMD**
