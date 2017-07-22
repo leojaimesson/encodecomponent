@@ -1,0 +1,37 @@
+{
+  "name": "uricomponent",
+  "version": "1.0.0",
+  "description": "Uma simples lib para realizar conversão de um objeto javascript em uma string de parâmetro URI codificada.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leojaimesson/encodecomponent.git"
+  },
+  "keywords": [
+    "uri",
+    "uricomponent",
+    "encodeuri",
+    "encode",
+    "encodeuricomponent",
+    "uriquery",
+    "uriencodequery"
+  ],
+  "author": "Leo Jaimesson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leojaimesson/encodecomponent/issues"
+  },
+  "homepage": "https://github.com/leojaimesson/encodecomponent#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-header": "^1.8.9",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
+  }
+}

@@ -52,7 +52,7 @@
 			}
 	 		var pre = prefixList.reduce(function(acc , item) {
 	 			return acc.length > 0 ? acc + encodeURI(item) + encodeURI(']') + encodeURI('[') : acc + encodeURI(item) + encodeURI('[');
-	 		}, '')
+	 		}, '');
 
 			return acc + pre + encodeURI(item) + encodeURI(']') + '=' + encodeURI(object[item]) +'&';
 		},'');
