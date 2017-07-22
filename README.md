@@ -1,6 +1,6 @@
 # URIComponent
 
-Uma simples lib para realizar a conversão um objeto javascript em uma string de parâmetro URI codificada. 
+Uma simples lib para converter um objeto javascript em uma string de parâmetro URI codificada. 
 
 ## Importar
 
