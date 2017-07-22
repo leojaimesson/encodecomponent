@@ -1,7 +1,7 @@
 {
   "name": "uricomponent",
   "version": "1.0.0",
-  "description": "Uma simples lib para realizar conversão de um objeto javascript em uma string de parâmetro URI codificada.",
+  "description": "Uma simples lib para converter um objeto javascript em uma string de parâmetro URI codificada.",
   "main": "index.js",
   "directories": {
     "test": "test"
