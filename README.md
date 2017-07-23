@@ -60,4 +60,4 @@ console.log(uri); // name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail
 
 ### Licença
 
-**MIT**
+[MIT License](https://github.com/leojaimesson/MIT-License)
