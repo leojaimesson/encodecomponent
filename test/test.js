@@ -9,4 +9,8 @@ var object = {
     }
 };
 
-console.log(uricomp(object));
+var encode = uricomp.encode(object);
+var decode = uricomp.decode(encode);
+
+console.log('encode: ',encode);
+console.log('decode: ', decode);

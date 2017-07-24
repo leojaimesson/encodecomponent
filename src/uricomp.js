@@ -13,6 +13,17 @@
 
 })(this, function(){
 	'use strict'
+
+	/**
+	 * @description
+	 * Verifica se um elemento realmente é uma string
+	 * 
+	 * @param {String} str 
+	 * @return {Boolean}
+	 */
+	function isString(str) {
+		return typeof(str) === 'string';
+	}
 	
 	/**
 	 * @description 
@@ -22,7 +33,7 @@
 	 * @return {Boolean}
 	 */
 	function isObject(object) {
-		return Object.prototype.toString.call(object) === '[object Object]' || typeof(object) === 'object';
+		return typeof(object) === 'object';
 	}
 
 	/**
@@ -74,13 +85,79 @@
 				return (!prev ? '' : prev + '&') + encodeURI(item) + '=' + encodeURI(object[item]);
 			}, '');
 		}
-
+	
+	/**
+	 * @description
+	 * Recebe um objeto e retorna uma string de parâmetro de URI codificada.
+	 * 
+	 * @param {Object} object 
+	 * @return {String}
+	 */
 	function _objectToQueryString(object) {
 		return isObject(object) ? _buildCode(object) : object;
 	}
 
-	function uricomp(obj) {
-		return _objectToQueryString(obj);
+	/**
+	 * @description
+	 * Tranforma a substring em sua versão de objeto
+	 * 
+	 * @param {Object} obj 
+	 * @param {Array} keys 
+	 * @param {String} value
+	 * @return {Object} 
+	 */
+	function _deconstructCodeSubUri(obj, keys, value) {
+		if(keys.length === 1) {
+			obj[keys[0]] = value;
+			return obj;
+		}
+		obj[keys[0]] = _deconstructCodeSubUri({}, keys.slice(1, keys.length), value);
+		return obj;
+	}
+
+	/**
+	 * @description
+	 * Recebe uma string "URI" e retorna a sua versão em objecto
+	 * 
+	 * @param {String} rawUri
+	 * @return {Object} 
+	 */
+	function _deconstructCode(rawUri) {
+		//retiras os caracteres [] e transforma em um array quebrando a string no &
+		var uriProcessed = decodeURIComponent(rawUri).replace(/[\[]/ig,',').replace(/[\]]/ig,'').split('&');
+
+		return uriProcessed.reduce(function(acc, item) {
+			var keyAndValue = item.split('=');
+			var value = keyAndValue[1];
+			var keys = keyAndValue[0].split(',');
+			if(keys.length === 1){
+				acc[keys[0]] = value;
+			}
+			else{
+			acc[keys[0]] = _deconstructCodeSubUri(acc[keys[0]] ? acc[keys[0]] : {},  keys.slice(1, keys.length), value);
+			}
+			return acc;
+		}, {});
+	}
+
+	/**
+	 * @description
+	 * Recebe uma string "URI" e retorna a sua versão de objeto.
+	 * 
+	 * @param {Object} object 
+	 * @return {String}
+	 */
+	function _queryStringToObject(uri) {
+		return isString(uri) ? _deconstructCode(uri) : uri;
+	}
+
+	var uricomp = {
+		encode : function(obj) {
+			return _objectToQueryString(obj);
+		},
+		decode : function(uri) {
+			return _queryStringToObject(uri);
+		}
 	}
 
 	return uricomp; 

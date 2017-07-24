@@ -1,14 +1,14 @@
 # URIComponent
 
-Uma simples lib para converter um objeto javascript em uma string de parâmetro URI codificada. 
+A simple library to converting a javascript object to an encoded URI parameter string. 
 
-## Instalação
+## Installation
 
 ```console
 npm install uricomponent
 ```
 
-## Importar
+## Import
 
 **AMD**
 
@@ -34,18 +34,23 @@ uricomp(...)
 
 ---
 
-## Assinatura
+## Signature
 
 ```js
-uricomp([Object])
+uricomp.encode([Object]);
+uricomp.decode([String]);
 ```
 
 ---
 
-## Uso
+## Use
+
+**Encode**
+
+- Input
 
 ```js
-var object = {
+var obj = {
     name : 'leo jaimesson',
     age : 21,
     emails : {
@@ -53,11 +58,41 @@ var object = {
         email2 : 'test@outlook.com'
     }
 };
-var uri = uricomp(object);
 
-console.log(uri); // name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com
+uricomp.encode(obj);
 ```
 
-### Licença
+- Output
+
+```console
+"name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com"
+```
+
+**Decode**
+
+- Input
+
+```js
+var uri = "name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com";
+
+uricomp.decode(uri);
+```
+
+- Output
+
+```js
+{
+    name : 'leo jaimesson',
+    age : '21',
+    emails : {
+        email1 : 'test@gmail.com',
+        email2 : 'test@outlook.com'
+    }
+}
+```
+
+---
+
+### License
 
 [MIT License](https://github.com/leojaimesson/MIT-License)
