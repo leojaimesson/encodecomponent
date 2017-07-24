@@ -14,7 +14,8 @@ npm install uricomponent
 
 ```js
 define(['uricomp'], function (uricomp) {
-  uricomp(...);
+  uricomp.encode(...);
+  uricomp.decode(...);
 })
 ```
 
@@ -22,14 +23,16 @@ define(['uricomp'], function (uricomp) {
 
 ```js
 var uricomp = require('uricomp');
-uricomp(...);
+uricomp.encode(...);
+uricomp.decode(...);
 ```
 
 **ES6 / ES2015 module**
 
 ```js
 import uricomp from 'uricomp'
-uricomp(...)
+uricomp.encode(...)
+uricomp.decode(...);
 ```
 
 ---
