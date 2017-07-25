@@ -13,26 +13,26 @@ npm install uricomponent
 **AMD**
 
 ```js
-define(['uricomp'], function (uricomp) {
-  uricomp.encode(...);
-  uricomp.decode(...);
+define(['uricomponent'], function (uricomponent) {
+  uricomponent.encode(...);
+  uricomponent.decode(...);
 })
 ```
 
 **CommonJS**
 
 ```js
-var uricomp = require('uricomp');
-uricomp.encode(...);
-uricomp.decode(...);
+var uricomponent = require('uricomponent');
+uricomponent.encode(...);
+uricomponent.decode(...);
 ```
 
 **ES6 / ES2015 module**
 
 ```js
-import uricomp from 'uricomp'
-uricomp.encode(...)
-uricomp.decode(...);
+import uricomponent from 'uricomponent'
+uricomponent.encode(...)
+uricomponent.decode(...);
 ```
 
 ---
@@ -40,8 +40,8 @@ uricomp.decode(...);
 ## Signature
 
 ```js
-uricomp.encode([Object]);
-uricomp.decode([String]);
+uricomponent.encode([Object]);
+uricomponent.decode([String]);
 ```
 
 ---
@@ -62,7 +62,7 @@ var obj = {
     }
 };
 
-uricomp.encode(obj);
+uricomponent.encode(obj);
 ```
 
 - Output
@@ -78,7 +78,7 @@ uricomp.encode(obj);
 ```js
 var uri = "name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com";
 
-uricomp.decode(uri);
+uricomponent.decode(uri);
 ```
 
 - Output

@@ -1,4 +1,4 @@
-var uricomp = require('../src/uricomp');
+var uricomp = require('../src/uricomponent');
 
 var object = {
     name : 'leo jaimesson',
