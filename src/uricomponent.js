@@ -59,26 +59,33 @@
 		var prefixList = prefix.split(',');
 		return Object.keys(obj).reduce(function(acc, item) {
 			if(isObject(obj[item])){
-				 return acc 
+				 return 
+						acc 
 						+ _buildCodeSubObjects(
-												(prefix + ',' + item) 
-												,obj[item]
-											);
+							(prefix + ',' + item) 
+							,obj[item]
+						);
 			}
 	 		var pre = prefixList.reduce(function(acc , item) {
-				 return (acc.length > 0) 
-						? (acc 
+				 return 
+				  		(acc.length > 0) 
+						? 
+						(
+							acc 
 							+ encodeURI(item) 
 							+ encodeURI(']') 
 							+ encodeURI('[') 
 						) 
-						: (acc 
+						: 
+						(
+							acc 
 							+ encodeURI(item) 
 							+ encodeURI('[')
 						);
 	 		}, '');
 
-			return acc 
+			return 
+					acc 
 					+ pre 
 					+ encodeURI(item) 
 					+ encodeURI(']') 
@@ -99,20 +106,24 @@
 			return Object.keys(obj).reduce(function(acc, item){
 				if(isObject(obj[item])){
 					var result = _buildCodeSubObjects(
-														item
-														,obj[item]
-													).split('');
-					return acc 
+						item
+						,obj[item]
+					).split('');
+					return 
+							acc 
 							+ '&' 
 							+ result.slice(0, result.length-1)
 									.join('');
 				}
-				return (!acc 
+				return 
+					(
+						!acc 
 						? '' 
 						: acc + '&') 
 						+ encodeURI(item) 
 						+ '=' 
-						+ encodeURI(obj[item]);
+						+ encodeURI(obj[item]
+					);
 			}, '');
 		}
 	
@@ -144,10 +155,10 @@
 			return obj;
 		}
 		obj[keys[0]] = _deconstructCodeSubUri(
-												{}
-												,keys.slice(1, keys.length)
-												,value
-											);
+			{}
+			,keys.slice(1, keys.length)
+			,value
+		);
 		return obj;
 	}
 
@@ -160,10 +171,11 @@
 	 */
 	function _deconstructCode(rawUri) {
 		//retiras os caracteres [] e transforma em um array quebrando a string no &
-		var uriProcessed = decodeURIComponent(rawUri)
-							.replace(/[\[]/ig,',')
-							.replace(/[\]]/ig,'')
-							.split('&');
+		var uriProcessed = 
+						decodeURIComponent(rawUri)
+						.replace(/[\[]/ig,',')
+						.replace(/[\]]/ig,'')
+						.split('&');
 
 		return uriProcessed.reduce(function(acc, item) {
 			var keyAndValue = item.split('=');
@@ -173,11 +185,11 @@
 				acc[keys[0]] = value;
 			}
 			else{
-			acc[keys[0]] = _deconstructCodeSubUri(
-													acc[keys[0]] ? acc[keys[0]] : {}
-													,keys.slice(1, keys.length)
-													,value
-												);
+				acc[keys[0]] = _deconstructCodeSubUri(
+					acc[keys[0]] ? acc[keys[0]] : {}
+					,keys.slice(1, keys.length)
+					,value
+				);
 			}
 			return acc;
 		}, {});
@@ -191,7 +203,8 @@
 	 * @return {Object}
 	 */
 	function _queryStringToObject(uri) {
-		return isString(uri) 
+		return 
+				isString(uri) 
 				? _deconstructCode(uri) 
 				: uri;
 	}
