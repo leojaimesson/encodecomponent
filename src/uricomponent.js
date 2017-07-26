@@ -36,15 +36,19 @@
 		return typeof(obj) === 'object';
 	}
 
-	/**
-	 * @description
-	 * Recebe uma string e retorna a sua versão em um parâmetro de URI
-	 * 
-	 * @param {String} value
-	 * @return {String} 
-	 */
-	function encodeURI(value) {
-		return encodeURIComponent(value);
+	function isArray(array) {
+		return Array.isArray(array);
+	}
+
+	function isFunction(fn) {
+		return typeof(fn) === 'function';
+	}
+
+	function normalizeUri(uri) {
+		while (uri[uri.length-1] === '&') {
+			uri = uri.slice(0, uri.length-1);
+		}
+		return uri;
 	}
 
 	/**
@@ -58,40 +62,22 @@
 	function _buildCodeSubObjects(prefix, obj) {
 		var prefixList = prefix.split(',');
 		return Object.keys(obj).reduce(function(acc, item) {
-			if(isObject(obj[item])){
-				 return 
-						acc 
-						+ _buildCodeSubObjects(
-							(prefix + ',' + item) 
-							,obj[item]
-						);
+			if(isFunction(obj[item])) {
+				return acc;
 			}
-	 		var pre = prefixList.reduce(function(acc , item) {
-				 return 
-				  		(acc.length > 0) 
-						? 
-						(
-							acc 
-							+ encodeURI(item) 
-							+ encodeURI(']') 
-							+ encodeURI('[') 
-						) 
-						: 
-						(
-							acc 
-							+ encodeURI(item) 
-							+ encodeURI('[')
-						);
-	 		}, '');
-
-			return 
-					acc 
-					+ pre 
-					+ encodeURI(item) 
-					+ encodeURI(']') 
-					+ '=' 
-					+ encodeURI(obj[item]) 
-					+'&';
+			if(isArray(obj[item])) {
+				return acc + _buildCodeArray(obj[item], prefix + '[' + item + ']');
+			}
+			if(isObject(obj[item])){
+				return acc + normalizeUri(_buildCodeSubObjects((prefix + '[' + item + ']') ,obj[item])) + '&'
+			}
+			var pre = prefixList.reduce(function(acc , item) {
+				if(acc.length > 0){
+					return acc + item + '][';
+				}
+				return acc + item + '[';
+			}, '');
+			return acc + pre + item + ']=' + obj[item] + '&';
 		},'');
 	}
 
@@ -102,30 +88,23 @@
 	 * @param {Object} obj 
 	 * @return {String}
 	 */
-	function _buildCode(obj) {
-			return Object.keys(obj).reduce(function(acc, item){
-				if(isObject(obj[item])){
-					var result = _buildCodeSubObjects(
-						item
-						,obj[item]
-					).split('');
-					return 
-							acc 
-							+ '&' 
-							+ result.slice(0, result.length-1)
-									.join('');
-				}
-				return 
-					(
-						!acc 
-						? '' 
-						: acc + '&') 
-						+ encodeURI(item) 
-						+ '=' 
-						+ encodeURI(obj[item]
-					);
-			}, '');
+	function _buildCode(obj, name) {
+		if(isArray(obj)) {
+			return _buildCodeArray(obj, name)
 		}
+		return Object.keys(obj).reduce(function(acc, item){
+			if(isFunction(obj[item])) {
+				return acc;
+			}
+			if(isArray(obj[item])) {
+				return acc +  _buildCodeArray(obj[item], item);
+			}
+			if(isObject(obj[item])){
+					return  acc + normalizeUri(_buildCodeSubObjects(item ,obj[item])) + '&';
+			}
+			return acc + item + '=' + obj[item] + '&';
+		}, '');
+	}
 	
 	/**
 	 * @description
@@ -134,10 +113,8 @@
 	 * @param {Object} obj 
 	 * @return {String}
 	 */
-	function _objectToQueryString(obj) {
-		return isObject(obj) 
-				? _buildCode(obj) 
-				: obj;
+	function _objectToQueryString(obj, name) {
+		return isObject(obj) ? encodeURIComponent(normalizeUri(_buildCode(obj, name))) : obj;
 	}
 
 	/**
@@ -203,10 +180,7 @@
 	 * @return {Object}
 	 */
 	function _queryStringToObject(uri) {
-		return 
-				isString(uri) 
-				? _deconstructCode(uri) 
-				: uri;
+		return isString(uri) ? _deconstructCode(uri) : uri;
 	}
 
 	var uricomponent = {
