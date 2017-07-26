@@ -51,6 +51,24 @@
 		return uri;
 	}
 
+	function _buildCodeArray(array,key) {
+		var acc = '';
+		for(var i = 0; i < array.length; i++) {
+			if(!isFunction(array[i])) {
+				if(isArray(array[i])){
+					acc += _buildCodeArray(array[i], key + '['+ i +']');
+				}
+				else if(isObject(array[i])){
+					acc +=  normalizeUri(_buildCodeSubObjects( key + '['+ i +']', array[i])) + '&' ;
+				}
+				else {
+					acc += key + '[]=' + array[i] + '&';
+				}	
+			}
+		}
+		return acc;
+	}
+
 	/**
 	 * @description
 	 * Converte um sub-objeto em sua respectiva string de parâmetro de URI codificada.
@@ -114,7 +132,7 @@
 	 * @return {String}
 	 */
 	function _objectToQueryString(obj, name) {
-		return isObject(obj) ? encodeURIComponent(normalizeUri(_buildCode(obj, name))) : obj;
+		return isObject(obj) ? encodeURIComponent(normalizeUri(_buildCode(obj, name))).replace(/%3D/ig, '=').replace(/%26/ig, '&') : obj;
 	}
 
 	/**

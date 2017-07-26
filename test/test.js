@@ -6,7 +6,17 @@ var object = {
     emails : {
         email1 : 'test@gmail.com',
         email2 : 'test@outlook.com'
-    }
+    },
+    family : [
+        {
+            name : 'leonardo',
+            age : 50
+        },
+        {
+            name : 'margarida',
+            age : 51
+        }
+    ]
 };
 
 var encode = uricomp.encode(object);
