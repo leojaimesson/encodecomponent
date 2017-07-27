@@ -36,14 +36,35 @@
 		return typeof(obj) === 'object';
 	}
 
+	/**
+	 * @description
+	 * Verifica se um elemento realmente é um array.
+	 * 
+	 * @param {Array} array 
+	 * @return {Boolean}
+	 */
 	function isArray(array) {
 		return Array.isArray(array);
 	}
 
+	/**
+	 * @description
+	 * Verifica se um elemento é uma function.
+	 * 
+	 * @param {Function} fn
+	 * @return {Boolean} 
+	 */
 	function isFunction(fn) {
 		return typeof(fn) === 'function';
 	}
 
+	/**
+	 * @description
+	 * Retira o excesso de caracteres '&' do final da string.
+	 * 
+	 * @param {String} uri
+	 * @return {String} 
+	 */
 	function normalizeUri(uri) {
 		while (uri[uri.length-1] === '&') {
 			uri = uri.slice(0, uri.length-1);
@@ -51,6 +72,14 @@
 		return uri;
 	}
 
+	/**
+	 * @description
+	 * Converte um array em sua respectiva string de parâmetro de URI codificada.
+	 * 
+	 * @param {Array} array 
+	 * @param {String} key
+	 * @return {String} 
+	 */
 	function _buildCodeArray(array,key) {
 		var acc = '';
 		for(var i = 0; i < array.length; i++) {
