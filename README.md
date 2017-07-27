@@ -62,7 +62,7 @@ var obj = {
     ]
 };
 
-uricomponent.encode(obj);
+uricomponent(obj);
 ```
 
 - Output
