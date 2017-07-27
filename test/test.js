@@ -7,20 +7,24 @@ var object = {
         email1 : 'test@gmail.com',
         email2 : 'test@outlook.com'
     },
-    family : [
-        {
-            name : 'leonardo',
-            age : 50
-        },
-        {
-            name : 'margarida',
-            age : 51
-        }
+    numbers : [
+        1,
+        2,
+        3
     ]
 };
 
-var encode = uricomp.encode(object);
-var decode = uricomp.decode(encode);
+var array = [
+    1,
+    2,
+    {
+        a : 'a',
+        b : 'b'
+    }
+]
 
-console.log('encode: ',encode);
-console.log('decode: ', decode);
+var encodeObj = uricomp(object);
+var encodeArr = uricomp(array, 'name');
+
+console.log('encode-object: ',encodeObj);
+console.log('encode-array: ', encodeArr);

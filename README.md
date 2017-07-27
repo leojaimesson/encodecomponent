@@ -14,8 +14,7 @@ npm install uricomponent
 
 ```js
 define(['uricomponent'], function (uricomponent) {
-  uricomponent.encode(...);
-  uricomponent.decode(...);
+  uricomponent(...);
 })
 ```
 
@@ -23,16 +22,14 @@ define(['uricomponent'], function (uricomponent) {
 
 ```js
 var uricomponent = require('uricomponent');
-uricomponent.encode(...);
-uricomponent.decode(...);
+uricomponent(...);
 ```
 
 **ES6 / ES2015 module**
 
 ```js
 import uricomponent from 'uricomponent'
-uricomponent.encode(...)
-uricomponent.decode(...);
+uricomponent(...);
 ```
 
 ---
@@ -40,15 +37,13 @@ uricomponent.decode(...);
 ## Signature
 
 ```js
-uricomponent.encode([Object]);
-uricomponent.decode([String]);
+uricomponent([Object]);
+uricomponent([Array],[String]);
 ```
 
 ---
 
 ## Use
-
-**Encode**
 
 - Input
 
@@ -59,7 +54,12 @@ var obj = {
     emails : {
         email1 : 'test@gmail.com',
         email2 : 'test@outlook.com'
-    }
+    },
+    numbers : [
+        1,
+        2,
+        3
+    ]
 };
 
 uricomponent.encode(obj);
@@ -68,30 +68,28 @@ uricomponent.encode(obj);
 - Output
 
 ```console
-"name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com"
+"name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com&numbers%5B%5D=1&numbers%5B%5D=2&numbers%5B%5D=3"
 ```
-
-**Decode**
 
 - Input
 
 ```js
-var uri = "name=leo%20jaimesson&age=21&emails%5Bemail1%5D=test%40gmail.com&emails%5Bemail2%5D=test%40outlook.com";
+var array = [
+    1,
+    2,
+    {
+        a : 'a',
+        b : 'b'
+    }
+]
 
-uricomponent.decode(uri);
+uricomponent(array, 'name');
 ```
 
 - Output
 
-```js
-{
-    name : 'leo jaimesson',
-    age : '21',
-    emails : {
-        email1 : 'test@gmail.com',
-        email2 : 'test@outlook.com'
-    }
-}
+```console
+"name%5B%5D=1&name%5B%5D=2&name%5B2%5D%5Ba%5D=a&name%5B2%5D%5Bb%5D=b"
 ```
 
 ---

@@ -128,87 +128,19 @@
 	 * @description
 	 * Recebe um objeto e retorna uma string de parâmetro de URI codificada.
 	 * 
-	 * @param {Object} obj 
+	 * @param {Object} component 
 	 * @return {String}
 	 */
-	function _objectToQueryString(obj, name) {
-		return isObject(obj) ? encodeURIComponent(normalizeUri(_buildCode(obj, name))).replace(/%3D/ig, '=').replace(/%26/ig, '&') : obj;
+	function _objectToQueryString(component, name) {
+		return isObject(component) || isArray(component) ? encodeURIComponent(normalizeUri(_buildCode(component, name))).replace(/%3D/ig, '=').replace(/%26/ig, '&') : component;
 	}
 
-	/**
-	 * @description
-	 * Tranforma a substring em sua versão de objeto
-	 * 
-	 * @param {Object} obj 
-	 * @param {Array} keys 
-	 * @param {String} value
-	 * @return {Object} 
-	 */
-	function _deconstructCodeSubUri(obj, keys, value) {
-		if(keys.length === 1) {
-			obj[keys[0]] = value;
-			return obj;
-		}
-		obj[keys[0]] = _deconstructCodeSubUri(
-			{}
-			,keys.slice(1, keys.length)
-			,value
-		);
-		return obj;
-	}
+	
 
-	/**
-	 * @description
-	 * Recebe uma string "URI" e retorna a sua versão em objecto
-	 * 
-	 * @param {String} rawUri
-	 * @return {Object} 
-	 */
-	function _deconstructCode(rawUri) {
-		//retiras os caracteres [] e transforma em um array quebrando a string no &
-		var uriProcessed = 
-						decodeURIComponent(rawUri)
-						.replace(/[\[]/ig,',')
-						.replace(/[\]]/ig,'')
-						.split('&');
-
-		return uriProcessed.reduce(function(acc, item) {
-			var keyAndValue = item.split('=');
-			var value = keyAndValue[1];
-			var keys = keyAndValue[0].split(',');
-			if(keys.length === 1){
-				acc[keys[0]] = value;
-			}
-			else{
-				acc[keys[0]] = _deconstructCodeSubUri(
-					acc[keys[0]] ? acc[keys[0]] : {}
-					,keys.slice(1, keys.length)
-					,value
-				);
-			}
-			return acc;
-		}, {});
+	function uricomponent(component, name){
+		return _objectToQueryString(component, name);
 	}
-
-	/**
-	 * @description
-	 * Recebe uma string "URI" e retorna a sua versão de objeto.
-	 * 
-	 * @param {String} uri 
-	 * @return {Object}
-	 */
-	function _queryStringToObject(uri) {
-		return isString(uri) ? _deconstructCode(uri) : uri;
-	}
-
-	var uricomponent = {
-		encode : function(obj) {
-			return _objectToQueryString(obj);
-		},
-		decode : function(uri) {
-			return _queryStringToObject(uri);
-		}
-	}
+		
 
 	return uricomponent; 
 })
