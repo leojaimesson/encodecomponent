@@ -14,7 +14,7 @@ npm install uricomponent
 
 ```js
 define(['uricomponent'], function (uricomponent) {
-  uricomponent(...);
+  uricomponent.encode(...);
 })
 ```
 
@@ -22,14 +22,14 @@ define(['uricomponent'], function (uricomponent) {
 
 ```js
 var uricomponent = require('uricomponent');
-uricomponent(...);
+uricomponent.encode(...);
 ```
 
 **ES6 / ES2015 module**
 
 ```js
 import uricomponent from 'uricomponent'
-uricomponent(...);
+uricomponent.encode(...);
 ```
 
 ---
@@ -37,8 +37,8 @@ uricomponent(...);
 ## Signature
 
 ```js
-uricomponent([Object]);
-uricomponent([Array],[String]);
+uricomponent.encode([Object]);
+uricomponent.encode([Array],[String]);
 ```
 
 ---
@@ -62,7 +62,7 @@ var obj = {
     ]
 };
 
-uricomponent(obj);
+uricomponent.encode(obj);
 ```
 
 - Output
@@ -83,7 +83,7 @@ var array = [
     }
 ]
 
-uricomponent(array, 'name');
+uricomponent.encode(array, 'name');
 ```
 
 - Output
