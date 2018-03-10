@@ -13,6 +13,9 @@
 
 })(this, function(){
 	'use strict'
+	let FIRST_SIMBOL = '%5B';
+	let LAST_SIMBOL = '%5D';
+	let FULL_SIMBOL = '%5B%5D';
 
 	/**
 	 * @description
@@ -24,7 +27,18 @@
 	function isString(str) {
 		return typeof(str) === 'string';
 	}
-	
+
+	/**
+	 * @description
+	 * Verifica se um elemento realmente é um numero
+	 * 
+	 * @param {String} str 
+	 * @return {Boolean}
+	 */
+	function isNumber(n) {
+	    return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
 	/**
 	 * @description 
 	 * Verifica se um elemento realmente é um objeto.
@@ -98,6 +112,55 @@
 		return acc;
 	}
 
+	function _isDecodeArrayPosition(data, key) {
+		return data.indexOf(key + FULL_SIMBOL) !== -1;
+	}
+
+	function _getValueFromArray(value, key) {
+		return value.replace(key + FULL_SIMBOL + '=', '')
+	}
+
+	/**
+	 * @description
+	 * Converte uma string codificada no respectivo array
+	 *
+	 * @param { String } string
+	 * @param { String } key
+	 * @return { Array }
+	 */
+	function decodeArray(string, key) {
+		let array = string.split('&')
+		let res = [];
+		array.forEach(value => {
+			let v;
+			if (_isDecodeArrayPosition(value, key)) {
+				v = _getValueFromArray(value, key);
+				v = isNumber(v) ? parseFloat(v) : value;
+			} 
+			res.push(v);
+		});
+		
+		return res;
+	}
+
+	/** @V1 Only simple objects
+	 * 
+	 * @description
+	 * Converte uma string codificada em seu respectivo sub-objeto.
+	 * 
+	 * @param {String} component  
+	 * @return {Object} 
+	 */
+	function decodeObject(component) {
+		let data = component.split('&')
+		let res = {}
+		data.forEach(value => {
+			let pos = value.split('=');
+			res[pos[0]] = isNumber(pos[1]) ? parseFloat(pos[1]) : pos[1];
+		});
+		return res;
+	}
+
 	/**
 	 * @description
 	 * Converte um sub-objeto em sua respectiva string de parâmetro de URI codificada.
@@ -164,12 +227,20 @@
 		return isObject(component) || isArray(component) ? encodeURIComponent(normalizeUri(_buildCode(component, name))).replace(/%3D/ig, '=').replace(/%26/ig, '&') : component;
 	}
 
-	
-
-	function uricomponent(component, name){
+	function encode(component, name){
 		return _objectToQueryString(component, name);
 	}
-		
 
-	return uricomponent; 
+	function _queryStringToObject(component, name) {
+		return name !== '' ? decodeArray(component, name) : decodeObject(component);
+	}
+	function decode(component, name) {
+		let key = name || '';
+		return _queryStringToObject(component, key);
+	}
+
+	return { 
+		encode, 
+		decode,
+	};
 })
