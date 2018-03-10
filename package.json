@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,11 @@
     "encodeuricomponent",
     "uriquery",
     "uriencodequery",
-    "urlencode", 
-    "urldecode", 
+    "urlencode",
+    "urldecode",
     "encodeURIComponent",
     "decodeURIComponent",
-    "querystring", 
+    "querystring",
     "parse",
     "uriencode",
     "url",
@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/leojaimesson/encodecomponent#readme",
   "devDependencies": {
+    "ava": "^1.0.0-beta.3",
     "gulp": "^3.9.1",
     "gulp-header": "^1.8.9",
     "gulp-rename": "^1.2.2",
